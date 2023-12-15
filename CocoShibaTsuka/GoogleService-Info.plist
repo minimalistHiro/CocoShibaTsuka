@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyAlFFDVw3lAm8Jmh67sW-tQpDKgGYA90Bo</string>
+	<key>GCM_SENDER_ID</key>
+	<string>821883841561</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.hiroki.CocoShibaTsuka</string>
+	<key>PROJECT_ID</key>
+	<string>cocoshibatsuka</string>
+	<key>STORAGE_BUCKET</key>
+	<string>cocoshibatsuka.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:821883841561:ios:5e50ff80513d85e5f04e88</string>
+</dict>
+</plist>
