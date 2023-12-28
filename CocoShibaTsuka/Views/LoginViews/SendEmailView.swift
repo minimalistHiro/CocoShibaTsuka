@@ -59,7 +59,7 @@ struct SendEmailView: View {
                 ScaleEffectIndicator(onIndicator: $vm.onIndicator)
             }
             .navigationDestination(isPresented: $isNavigateSetUpPasswordView) {
-                ResetPasswordView()
+                ResetPasswordView(email: $email, didCompleteLoginProcess: didCompleteLoginProcess)
             }
         }
         .asBackButton()

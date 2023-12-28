@@ -52,16 +52,6 @@ final class ViewModel: ObservableObject {
             .collection(FirebaseConstants.users)
             .document(uid)
             .getDocument { snapshot, error in
-//                if let error = error as NSError?, let errorCode = AuthErrorCode.Code(rawValue: error.code) {
-//                    switch errorCode {
-//                    case .networkError:
-//                        self.handleError(String.networkError)
-//                        return
-//                    default:
-//                        self.handleError("ユーザー情報の取得に失敗しました。")
-//                        return
-//                    }
-//                }
                 self.handleNetworkError(error: error, errorMessage: "ユーザー情報の取得に失敗しました。")
                 
                 guard let data = snapshot?.data() else {
@@ -83,16 +73,6 @@ final class ViewModel: ObservableObject {
             .collection(FirebaseConstants.users)
             .document(uid)
             .getDocument { snapshot, error in
-//                if let error = error as NSError?, let errorCode = AuthErrorCode.Code(rawValue: error.code) {
-//                    switch errorCode {
-//                    case .networkError:
-//                        self.handleError(String.networkError)
-//                        return
-//                    default:
-//                        self.handleError("ユーザー情報の取得に失敗しました。")
-//                        return
-//                    }
-//                }
                 self.handleNetworkError(error: error, errorMessage: "ユーザー情報の取得に失敗しました。")
                 
                 guard let data = snapshot?.data() else {
@@ -118,16 +98,6 @@ final class ViewModel: ObservableObject {
             .collection(FirebaseConstants.message)
             .order(by: FirebaseConstants.timestamp)
             .addSnapshotListener { querySnapshot, error in
-//                if let error = error as NSError?, let errorCode = AuthErrorCode.Code(rawValue: error.code) {
-//                    switch errorCode {
-//                    case .networkError:
-//                        self.handleError(String.networkError)
-//                        return
-//                    default:
-//                        self.handleError("最新メッセージの取得に失敗しました。")
-//                        return
-//                    }
-//                }
                 self.handleNetworkError(error: error, errorMessage: "最新メッセージの取得に失敗しました。")
                 
                 querySnapshot?.documentChanges.forEach({ change in
@@ -165,16 +135,6 @@ final class ViewModel: ObservableObject {
             .collection(toId)
             .order(by: FirebaseConstants.timestamp)
             .addSnapshotListener { querySnapshot, error in
-//                if let error = error as NSError?, let errorCode = AuthErrorCode.Code(rawValue: error.code) {
-//                    switch errorCode {
-//                    case .networkError:
-//                        self.handleError(String.networkError)
-//                        return
-//                    default:
-//                        self.handleError("メッセージの取得に失敗しました。")
-//                        return
-//                    }
-//                }
                 self.handleNetworkError(error: error, errorMessage: "メッセージの取得に失敗しました。")
                 
                 querySnapshot?.documentChanges.forEach({ change in
@@ -208,18 +168,7 @@ final class ViewModel: ObservableObject {
             .collection(FirebaseConstants.user)
             .document(document2)
             .getDocument { snapshot, error in
-//                if let error = error as NSError?, let errorCode = AuthErrorCode.Code(rawValue: error.code) {
-//                    switch errorCode {
-//                    case .networkError:
-//                        self.handleError(String.networkError)
-//                        return
-//                    default:
-//                        self.handleError("このユーザーはあなたと縁を切りました。")
-//                        return
-//                    }
-//                }
                 self.handleNetworkError(error: error, errorMessage: "このユーザーはあなたと縁を切りました。")
-                
                 
                 guard let data = snapshot?.data() else {
                     self.handleError("このユーザーはあなたと縁を切りました。", error: nil)
@@ -243,16 +192,6 @@ final class ViewModel: ObservableObject {
             .collection(FirebaseConstants.user)
             .order(by: FirebaseConstants.username)
             .addSnapshotListener { querySnapshot, error in
-//                if let error = error as NSError?, let errorCode = AuthErrorCode.Code(rawValue: error.code) {
-//                    switch errorCode {
-//                    case .networkError:
-//                        self.handleError(String.networkError)
-//                        return
-//                    default:
-//                        self.handleError("友達情報の取得に失敗しました。")
-//                        return
-//                    }
-//                }
                 self.handleNetworkError(error: error, errorMessage: "友達情報の取得に失敗しました。")
                 
                 querySnapshot?.documentChanges.forEach({ change in
@@ -361,22 +300,11 @@ final class ViewModel: ObservableObject {
         }
     }
     
-    func signInWithEmailLink(email: String, link: String) {
-        Auth.auth().signIn(withEmail: email, link: link) { user, error in
-//            if let error = error as NSError?, let errorCode = AuthErrorCode.Code(rawValue: error.code) {
-//                switch errorCode {
-//                case .networkError:
-//                    self.handleError(String.networkError)
-//                    return
-//                default:
-//                    self.handleError("メールアドレス認証に失敗しました。")
-//                    return
-//                }
-//            }
-            self.handleNetworkError(error: error, errorMessage: "メールアドレス認証に失敗しました。")
-//            self.navigationController!.popViewController(animated: true)
-        }
-    }
+//    func signInWithEmailLink(email: String, link: String) {
+//        Auth.auth().signIn(withEmail: email, link: link) { user, error in
+//            self.handleNetworkError(error: error, errorMessage: "メールアドレス認証に失敗しました。")
+//        }
+//    }
     
     /// テキスト送信処理
     /// - Parameters:
@@ -620,16 +548,6 @@ final class ViewModel: ObservableObject {
             .collection(FirebaseConstants.users)
             .document(document)
             .updateData(data as [AnyHashable : Any]) { error in
-//                if let error = error as NSError?, let errorCode = AuthErrorCode.Code(rawValue: error.code) {
-//                    switch errorCode {
-//                    case .networkError:
-//                        self.handleError(String.networkError)
-//                        return
-//                    default:
-//                        self.handleError("ユーザー情報の更新に失敗しました。")
-//                        return
-//                    }
-//                }
                 self.handleNetworkError(error: error, errorMessage: "ユーザー情報の更新に失敗しました。")
             }
     }
@@ -647,16 +565,6 @@ final class ViewModel: ObservableObject {
             .collection(FirebaseConstants.message)
             .document(document2)
             .updateData(data as [AnyHashable : Any]) { error in
-//                if let error = error as NSError?, let errorCode = AuthErrorCode.Code(rawValue: error.code) {
-//                    switch errorCode {
-//                    case .networkError:
-//                        self.handleError(String.networkError)
-//                        return
-//                    default:
-//                        self.handleError("最新メッセージの更新に失敗しました。")
-//                        return
-//                    }
-//                }
                 self.handleNetworkError(error: error, errorMessage: "最新メッセージの更新に失敗しました。")
             }
     }
@@ -674,18 +582,18 @@ final class ViewModel: ObservableObject {
             .collection(FirebaseConstants.user)
             .document(document2)
             .updateData(data as [AnyHashable : Any]) { error in
-//                if let error = error as NSError?, let errorCode = AuthErrorCode.Code(rawValue: error.code) {
-//                    switch errorCode {
-//                    case .networkError:
-//                        self.handleError(String.networkError)
-//                        return
-//                    default:
-//                        self.handleError("ユーザー情報の更新に失敗しました。")
-//                        return
-//                    }
-//                }
                 self.handleNetworkError(error: error, errorMessage: "ユーザー情報の更新に失敗しました。")
             }
+    }
+    
+    /// パスワードを更新
+    /// - Parameters:
+    ///   - password: パスワード
+    /// - Returns: なし
+    func updatePassword(password: String) {
+        FirebaseManager.shared.auth.currentUser?.updatePassword(to: password) { error in
+            self.handleNetworkError(error: error, errorMessage: "パスワードの更新に失敗しました。")
+        }
     }
     
 // MARK: - Delete
@@ -699,16 +607,6 @@ final class ViewModel: ObservableObject {
             .collection(FirebaseConstants.users)
             .document(document)
             .delete { error in
-//                if let error = error as NSError?, let errorCode = AuthErrorCode.Code(rawValue: error.code) {
-//                    switch errorCode {
-//                    case .networkError:
-//                        self.handleError(String.networkError)
-//                        return
-//                    default:
-//                        self.handleError(String.failureDeleteData)
-//                        return
-//                    }
-//                }
                 self.handleNetworkError(error: error, errorMessage: String.failureDeleteData)
             }
     }
@@ -724,16 +622,6 @@ final class ViewModel: ObservableObject {
             .document(document)
             .collection(collection)
             .getDocuments { snapshot, error in
-//                if let error = error as NSError?, let errorCode = AuthErrorCode.Code(rawValue: error.code) {
-//                    switch errorCode {
-//                    case .networkError:
-//                        self.handleError(String.networkError)
-//                        return
-//                    default:
-//                        self.handleError(String.failureDeleteData)
-//                        return
-//                    }
-//                }
                 self.handleNetworkError(error: error, errorMessage: String.failureDeleteData)
                 for document in snapshot!.documents {
                     document.reference.delete { error in
@@ -758,16 +646,6 @@ final class ViewModel: ObservableObject {
             .collection(FirebaseConstants.message)
             .document(document2)
             .delete { error in
-//                if let error = error as NSError?, let errorCode = AuthErrorCode.Code(rawValue: error.code) {
-//                    switch errorCode {
-//                    case .networkError:
-//                        self.handleError(String.networkError)
-//                        return
-//                    default:
-//                        self.handleError(String.failureDeleteData)
-//                        return
-//                    }
-//                }
                 self.handleNetworkError(error: error, errorMessage: String.failureDeleteData)
             }
     }
@@ -784,16 +662,6 @@ final class ViewModel: ObservableObject {
             .collection(FirebaseConstants.user)
             .document(document2)
             .delete { error in
-//                if let error = error as NSError?, let errorCode = AuthErrorCode.Code(rawValue: error.code) {
-//                    switch errorCode {
-//                    case .networkError:
-//                        self.handleError(String.networkError)
-//                        return
-//                    default:
-//                        self.handleError(String.failureDeleteData)
-//                        return
-//                    }
-//                }
                 self.handleNetworkError(error: error, errorMessage: String.failureDeleteData)
             }
     }
@@ -808,16 +676,6 @@ final class ViewModel: ObservableObject {
             if stringImage != "" {
                 let ref = FirebaseManager.shared.storage.reference(withPath: withPath)
                 ref.delete { error in
-//                    if let error = error as NSError?, let errorCode = AuthErrorCode.Code(rawValue: error.code) {
-//                        switch errorCode {
-//                        case .networkError:
-//                            self.handleError(String.networkError)
-//                            return
-//                        default:
-//                            self.handleError(String.failureDeleteData)
-//                            return
-//                        }
-//                    }
                     self.handleNetworkError(error: error, errorMessage: String.failureDeleteData)
                 }
             }
@@ -829,16 +687,6 @@ final class ViewModel: ObservableObject {
     /// - Returns: なし
     func deleteAuth() {
         FirebaseManager.shared.auth.currentUser?.delete { error in
-//            if let error = error as NSError?, let errorCode = AuthErrorCode.Code(rawValue: error.code) {
-//                switch errorCode {
-//                case .networkError:
-//                    self.handleError(String.networkError)
-//                    return
-//                default:
-//                    self.handleError(String.failureDeleteData)
-//                    return
-//                }
-//            }
             self.handleNetworkError(error: error, errorMessage: String.failureDeleteData)
         }
     }
