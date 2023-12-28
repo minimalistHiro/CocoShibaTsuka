@@ -90,12 +90,12 @@ struct SetUpUsernameView: View {
                        isShowAlert: $vm.isShowError,
                        message: vm.errorMessage,
                        didAction: { vm.isShowError = false })
-        .asDestructiveAlert(title: "",
-                            isShowAlert: $isShowCloseAlert,
-                            message: "新規アカウントの作成を中止しますか？",
-                            buttonText: "中止") {
-//            dismiss()
-        }
+//        .asDestructiveAlert(title: "",
+//                            isShowAlert: $isShowCloseAlert,
+//                            message: "新規アカウントの作成を中止しますか？",
+//                            buttonText: "中止") {
+////            dismiss()
+//        }
     }
 }
 

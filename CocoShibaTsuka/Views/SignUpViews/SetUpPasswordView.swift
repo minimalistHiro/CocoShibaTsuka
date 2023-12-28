@@ -13,6 +13,7 @@ struct SetUpPasswordView: View {
     @ObservedObject var vm: ViewModel
     let didCompleteLoginProcess: () -> ()
     @State private var isShowPassword = false           // パスワード表示有無
+    @State private var isShowPassword2 = false          // 確認用パスワード表示有無
     
     // DB
     @State private var password: String = ""            // パスワード
@@ -51,7 +52,7 @@ struct SetUpPasswordView: View {
                 InputText.InputPasswordTextField(focus: $focus, editText: $password, titleText: "パスワード", isShowPassword: $isShowPassword)
                     .padding(.bottom)
                 
-                InputText.InputPasswordTextField(focus: $focus, editText: $password2, titleText: "パスワード（確認用）", isShowPassword: $isShowPassword)
+                InputText.InputPasswordTextField(focus: $focus, editText: $password2, titleText: "パスワード（確認用）", isShowPassword: $isShowPassword2)
                     .padding(.bottom)
                 
                 Spacer()

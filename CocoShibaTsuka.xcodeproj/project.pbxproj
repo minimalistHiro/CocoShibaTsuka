@@ -32,6 +32,8 @@
 		FD78B9232AEE6FCB008986E3 /* SendPayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD78B9222AEE6FCB008986E3 /* SendPayView.swift */; };
 		FD78B9252AEF6AB8008986E3 /* CloseButtonModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD78B9242AEF6AB8008986E3 /* CloseButtonModifier.swift */; };
 		FD7B98452B21AC110024FBD2 /* Friend.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD7B98442B21AC110024FBD2 /* Friend.swift */; };
+		FD98BE4C2B3C513B007AD393 /* SendEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD98BE4B2B3C513B007AD393 /* SendEmailView.swift */; };
+		FD98BE4E2B3D61B8007AD393 /* ResetPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD98BE4D2B3D61B8007AD393 /* ResetPasswordView.swift */; };
 		FDB03AA02ADA6B340018E732 /* CocoShibaTsukaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDB03A9F2ADA6B340018E732 /* CocoShibaTsukaApp.swift */; };
 		FDB03AA22ADA6B340018E732 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDB03AA12ADA6B340018E732 /* ContentView.swift */; };
 		FDB03AA42ADA6B360018E732 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FDB03AA32ADA6B360018E732 /* Assets.xcassets */; };
@@ -116,6 +118,8 @@
 		FD78B9222AEE6FCB008986E3 /* SendPayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendPayView.swift; sourceTree = "<group>"; };
 		FD78B9242AEF6AB8008986E3 /* CloseButtonModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseButtonModifier.swift; sourceTree = "<group>"; };
 		FD7B98442B21AC110024FBD2 /* Friend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Friend.swift; sourceTree = "<group>"; };
+		FD98BE4B2B3C513B007AD393 /* SendEmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendEmailView.swift; sourceTree = "<group>"; };
+		FD98BE4D2B3D61B8007AD393 /* ResetPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordView.swift; sourceTree = "<group>"; };
 		FDB03A9C2ADA6B340018E732 /* CocoShibaTsuka.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CocoShibaTsuka.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FDB03A9F2ADA6B340018E732 /* CocoShibaTsukaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocoShibaTsukaApp.swift; sourceTree = "<group>"; };
 		FDB03AA12ADA6B340018E732 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -193,7 +197,6 @@
 				FD10B42B2B34282200F7D791 /* SetUpEmailView.swift */,
 				FD10B42D2B34541400F7D791 /* SetUpPasswordView.swift */,
 				FD05E8742B25D3AD00AFC8CD /* CreateUsernameView.swift */,
-				FD524BE52B244AF800010BEA /* LoginView.swift */,
 			);
 			path = SignUpViews;
 			sourceTree = "<group>";
@@ -238,6 +241,16 @@
 				FD05E86D2B2454E200AFC8CD /* CustomTabBar.swift */,
 			);
 			path = Trash;
+			sourceTree = "<group>";
+		};
+		FD98BE4A2B3C511A007AD393 /* LoginViews */ = {
+			isa = PBXGroup;
+			children = (
+				FD524BE52B244AF800010BEA /* LoginView.swift */,
+				FD98BE4B2B3C513B007AD393 /* SendEmailView.swift */,
+				FD98BE4D2B3D61B8007AD393 /* ResetPasswordView.swift */,
+			);
+			path = LoginViews;
 			sourceTree = "<group>";
 		};
 		FDB03A932ADA6B340018E732 = {
@@ -288,6 +301,7 @@
 				FDB03AA12ADA6B340018E732 /* ContentView.swift */,
 				FD28F52C2B14811C00E3F205 /* EntryViews */,
 				FD05E8732B25D32300AFC8CD /* SignUpViews */,
+				FD98BE4A2B3C511A007AD393 /* LoginViews */,
 				FDB03AB52ADA6C490018E732 /* HomeViews */,
 				FDB03ABA2ADA6E120018E732 /* TradingHistoryViews */,
 				FDB03ABB2ADA6E2C0018E732 /* AccountView */,
@@ -535,6 +549,8 @@
 				FD1CA2FF2ADFF2C800899428 /* Icon.swift in Sources */,
 				FDB03B042ADB9F0E0018E732 /* ViewExtension.swift in Sources */,
 				FD524BE62B244AF800010BEA /* LoginView.swift in Sources */,
+				FD98BE4C2B3C513B007AD393 /* SendEmailView.swift in Sources */,
+				FD98BE4E2B3D61B8007AD393 /* ResetPasswordView.swift in Sources */,
 				FD78B9252AEF6AB8008986E3 /* CloseButtonModifier.swift in Sources */,
 				FD05E86E2B2454E200AFC8CD /* CustomTabBar.swift in Sources */,
 			);

@@ -16,7 +16,7 @@ struct SetUpEmailView: View {
     let didCompleteLoginProcess: () -> ()
 //    @State private var link = ""                        // リンク
     @State private var isShowSendEmailAlert = false     // メール送信確認アラート
-    @State private var isSendEmail = false              // メール送信済みか否か
+//    @State private var isSendEmail = false              // メール送信済みか否か
     @State private var isNavigateSetUpPasswordView = false  // パスワード設定画面の表示有無
     @State private var isShowCloseAlert = false         // 画面戻り確認アラート
     
@@ -29,7 +29,7 @@ struct SetUpEmailView: View {
         self.email.isEmpty
     }                                                   // ボタンの有効性
     
-    init(username: Binding<String>, 
+    init(username: Binding<String>,
          image: Binding<UIImage?>,
          didCompleteLoginProcess: @escaping () -> ())
     {
@@ -99,24 +99,25 @@ struct SetUpEmailView: View {
 //                }
 //            }
         }
-        .asAlertBackButton {
-            // メールが送信済みの場合のみアラートを発動
-            if isSendEmail {
-                isShowCloseAlert = true
-            } else {
-//                dismiss()
-            }
-        }
+        .asBackButton()
+//        .asAlertBackButton {
+//            // メールが送信済みの場合のみアラートを発動
+//            if isSendEmail {
+//                isShowCloseAlert = true
+//            } else {
+////                dismiss()
+//            }
+//        }
+        .asSingleAlert(title: "",
+                       isShowAlert: $vm.isShowError,
+                       message: vm.errorMessage,
+                       didAction: { vm.isShowError = false })
         .asSingleAlert(title: "",
                        isShowAlert: $isShowSendEmailAlert,
                        message: "入力したメールアドレスにパスワード設定用のURLを送信しました。",
                        didAction: {
             isShowSendEmailAlert = false
         })
-        .asSingleAlert(title: "",
-                       isShowAlert: $vm.isShowError,
-                       message: vm.errorMessage,
-                       didAction: { vm.isShowError = false })
         .asDestructiveAlert(title: "",
                             isShowAlert: $isShowCloseAlert,
                             message: "送信したメールリンクが無効になりますがよろしいですか？",
@@ -138,7 +139,7 @@ struct SetUpEmailView: View {
         FirebaseManager.shared.auth.sendSignInLink(toEmail: email, actionCodeSettings: actionCodeSettings) { error in
             vm.handleNetworkError(error: error, errorMessage: "リンクの送信に失敗しました。")
 //            UserDefaults.standard.setValue(email, forKey: "Email")
-            isSendEmail = true
+//            isSendEmail = true
         }
     }
     

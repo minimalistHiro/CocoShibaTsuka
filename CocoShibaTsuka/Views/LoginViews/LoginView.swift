@@ -47,6 +47,13 @@ struct LoginView: View {
                 .disabled(disabled)
                 
                 Spacer()
+                
+                Button {
+                    // TODO: - dfafa
+                } label: {
+                    Text("パスワードを忘れた方はこちら")
+                }
+                
                 Spacer()
             }
             // タップでキーボードを閉じるようにするため
