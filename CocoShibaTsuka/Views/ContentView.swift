@@ -12,33 +12,35 @@ import FirebaseAuth
 struct ContentView: View {
     
     @ObservedObject var vm = ViewModel()
+    @State private var isUserCurrentryLoggedOut = false                   // ユーザーのログインの有無
     
-    init() {
-        vm.isUserCurrentryLoggedOut = FirebaseManager.shared.auth.currentUser?.uid == nil
+//    init() {
+        // TODO: - ContentViewでこれを判断する必要があるのかどうか
+//        vm.isUserCurrentryLoggedOut = FirebaseManager.shared.auth.currentUser?.uid == nil
 //        if FirebaseManager.shared.auth.currentUser?.uid != nil {
 //            vm.fetchCurrentUser()
 //            vm.fetchRecentMessages()
 //        }
-    }
+//    }
     
     var body: some View {
         NavigationStack {
             TabView {
-                HomeView()
+                HomeView(isUserCurrentryLoggedOut: $isUserCurrentryLoggedOut)
                     .tabItem {
                         VStack {
                             Image(systemName: "house")
                         }
                     }
                     .tag(1)
-                TradingHistoryView()
-                    .tabItem {
-                        VStack {
-                            Image(systemName: "clock.arrow.circlepath")
-                        }
-                    }
-                    .tag(2)
-                AccountView()
+//                TradingHistoryView()
+//                    .tabItem {
+//                        VStack {
+//                            Image(systemName: "clock.arrow.circlepath")
+//                        }
+//                    }
+//                    .tag(2)
+                AccountView(isUserCurrentryLoggedOut: $isUserCurrentryLoggedOut)
                     .tabItem {
                         VStack {
                             Image(systemName: "person.fill")
@@ -48,14 +50,14 @@ struct ContentView: View {
             }
         }
         .tint(.black)
-        .fullScreenCover(isPresented: $vm.isUserCurrentryLoggedOut) {
-            EntryView {
-                vm.isUserCurrentryLoggedOut = false
-                vm.fetchCurrentUser()
-                vm.fetchRecentMessages()
-                vm.fetchFriends()
-            }
-        }
+//        .fullScreenCover(isPresented: $vm.isUserCurrentryLoggedOut) {
+//            EntryView {
+//                vm.isUserCurrentryLoggedOut = false
+//                vm.fetchCurrentUser()
+//                vm.fetchRecentMessages()
+//                vm.fetchFriends()
+//            }
+//        }
     }
 }
 

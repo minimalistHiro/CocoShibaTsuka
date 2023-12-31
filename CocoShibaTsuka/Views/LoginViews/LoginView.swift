@@ -33,7 +33,6 @@ struct LoginView: View {
                 Spacer()
                 
                 InputText.InputTextField(focus: $focus, editText: $email, titleText: "メールアドレス", isEmail: true)
-                    .padding(.bottom)
                 
                 InputText.InputPasswordTextField(focus: $focus, editText: $password, titleText: "パスワード", isShowPassword: $isShowPassword)
                 
@@ -48,10 +47,11 @@ struct LoginView: View {
                 
                 Spacer()
                 
-                Button {
-                    // TODO: - dfafa
+                NavigationLink {
+                    SendEmailView(didCompleteLoginProcess: didCompleteLoginProcess)
                 } label: {
                     Text("パスワードを忘れた方はこちら")
+                        .foregroundStyle(.blue)
                 }
                 
                 Spacer()

@@ -299,7 +299,6 @@ struct MoneyTransferView: View {
         }
         .fullScreenCover(isPresented: $shouldShowNewMessageScreen) {
 //            CreateNewMessageView { user in
-//                // MARK: - Add
 //                self.shouldNavigateToChatLogView.toggle()
 //                self.vm.chatUser = user
 //                self.vm.fetchMessages(toId: user.uid)

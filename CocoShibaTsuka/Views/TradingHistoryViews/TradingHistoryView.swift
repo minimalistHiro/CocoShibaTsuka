@@ -12,6 +12,8 @@ struct TradingHistoryView: View {
     @ObservedObject var vm = ViewModel()
     @State private var isShowSignOutAlert = false       // 強制サインアウトアラート
     
+    @Binding var isUserCurrentryLoggedOut: Bool
+    
     var body: some View {
         NavigationStack {
 //            ScrollView {
@@ -32,19 +34,27 @@ struct TradingHistoryView: View {
                        message: "エラーが発生したためログアウトします。",
                        didAction: {
             isShowSignOutAlert = false
-            vm.handleSignOut()
+            handleSignOut()
         })
-        .fullScreenCover(isPresented: $vm.isUserCurrentryLoggedOut) {
+        .fullScreenCover(isPresented: $isUserCurrentryLoggedOut) {
             EntryView {
-                vm.isUserCurrentryLoggedOut = false
+                isUserCurrentryLoggedOut = false
                 vm.fetchCurrentUser()
                 vm.fetchRecentMessages()
                 vm.fetchFriends()
             }
         }
     }
+    
+    // MARK: - サインアウト
+    /// - Parameters: なし
+    /// - Returns: なし
+    private func handleSignOut() {
+        isUserCurrentryLoggedOut = true
+        try? FirebaseManager.shared.auth.signOut()
+    }
 }
 
 #Preview {
-    TradingHistoryView()
+    TradingHistoryView(isUserCurrentryLoggedOut: .constant(false))
 }

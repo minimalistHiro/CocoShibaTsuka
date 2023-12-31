@@ -9,7 +9,6 @@ import SwiftUI
 
 struct SendPayView: View {
     
-//    @ObservedObject var vm: ContentViewModel
     @ObservedObject var vm = ViewModel()
     let didCompleteSendPayProcess: (String) -> ()
     @State private var isShowSendPayAlert = false       // 送金アラート
@@ -194,6 +193,7 @@ struct SendPayView: View {
             FirebaseConstants.username: chatUser.username,
             FirebaseConstants.isApproval: true,
             FirebaseConstants.approveUid: currentUser.uid,
+            FirebaseConstants.isStore: currentUser.isStore,
         ] as [String : Any]
         
         vm.persistFriends(document1: currentUser.uid, document2: chatUser.uid, data: myData)
@@ -207,6 +207,7 @@ struct SendPayView: View {
             FirebaseConstants.username: currentUser.username,
             FirebaseConstants.isApproval: true,
             FirebaseConstants.approveUid: currentUser.uid,
+            FirebaseConstants.isStore: currentUser.isStore,
         ] as [String : Any]
         
         vm.persistFriends(document1: chatUser.uid, document2: currentUser.uid, data: chatUserData)

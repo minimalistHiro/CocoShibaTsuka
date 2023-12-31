@@ -20,6 +20,8 @@ struct SetUpPasswordView: View {
     @State private var password2: String = ""           // 確認用パスワード
     @Binding var email: String
     @Binding var username: String
+    @Binding var age: String
+    @Binding var address: String
     @Binding var image: UIImage?
     
     var disabled: Bool {
@@ -32,13 +34,17 @@ struct SetUpPasswordView: View {
         return true
     }                                                   // ボタンの有効性
     
-    init(email: Binding<String>, 
+    init(email: Binding<String>,
          username: Binding<String>,
+         age: Binding<String>,
+         address: Binding<String>,
          image: Binding<UIImage?>,
          didCompleteLoginProcess: @escaping () -> ())
     {
         self._email = email
         self._username = username
+        self._age = age
+        self._address = address
         self._image = image
         self.didCompleteLoginProcess = didCompleteLoginProcess
         self.vm = .init(didCompleteLoginProcess: didCompleteLoginProcess)
@@ -50,15 +56,13 @@ struct SetUpPasswordView: View {
                 Spacer()
                 
                 InputText.InputPasswordTextField(focus: $focus, editText: $password, titleText: "パスワード", isShowPassword: $isShowPassword)
-                    .padding(.bottom)
                 
                 InputText.InputPasswordTextField(focus: $focus, editText: $password2, titleText: "パスワード（確認用）", isShowPassword: $isShowPassword2)
-                    .padding(.bottom)
                 
                 Spacer()
                 
                 Button {
-                    vm.createNewAccount(email: email, password: password, username: username, image: image)
+                    vm.createNewAccount(email: email, password: password, username: username, age: age, address: address, image: image)
                 } label: {
                     CustomCapsule(text: "アカウントを作成", imageSystemName: nil, foregroundColor: disabled ? .gray : .black, textColor: .white, isStroke: false)
                 }
@@ -87,5 +91,9 @@ struct SetUpPasswordView: View {
 }
 
 #Preview {
-    SetUpPasswordView(email: .constant("test@gmail.com"), username: .constant("test"), image: .constant(nil), didCompleteLoginProcess: {})
+    SetUpPasswordView(email: .constant(String.previewEmail), 
+                      username: .constant(String.previewUsername),
+                      age: .constant(String.previewAge),
+                      address: .constant(String.previewAddress),
+                      image: .constant(nil), didCompleteLoginProcess: {})
 }

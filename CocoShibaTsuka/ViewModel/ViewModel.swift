@@ -10,6 +10,7 @@ import FirebaseFirestore
 import FirebaseCore
 import FirebaseAuth
 import FirebaseStorage
+import FirebaseAnalytics
 
 final class ViewModel: ObservableObject {
     
@@ -20,7 +21,7 @@ final class ViewModel: ObservableObject {
     @Published var recentMessages = [RecentMessage]()           // 全最新メッセージ
     @Published var chatMessages = [ChatMessage]()               // 全メッセージ
     @Published var errorMessage = ""                            // エラーメッセージ
-    @Published var isUserCurrentryLoggedOut = false             // ユーザーのログインの有無
+//    @Published var isUserCurrentryLoggedOut = false             // ユーザーのログインの有無
     @Published var isShowError = false                          // エラー表示有無
     @Published var isScroll = false                             // メッセージスクロール用変数
     @Published var onIndicator = false                          // インジケーターが進行中か否か
@@ -44,7 +45,7 @@ final class ViewModel: ObservableObject {
         onIndicator = true
         
         guard let uid = FirebaseManager.shared.auth.currentUser?.uid else {
-            self.handleError("UIDの取得に失敗しました。", error: nil)
+            self.handleError(String.failureFetchUID, error: nil)
             return
         }
         
@@ -52,7 +53,7 @@ final class ViewModel: ObservableObject {
             .collection(FirebaseConstants.users)
             .document(uid)
             .getDocument { snapshot, error in
-                self.handleNetworkError(error: error, errorMessage: "ユーザー情報の取得に失敗しました。")
+                self.handleNetworkError(error: error, errorMessage: String.failureFetchUser)
                 
                 guard let data = snapshot?.data() else {
                     self.handleError(String.notFoundData, error: nil)
@@ -73,11 +74,11 @@ final class ViewModel: ObservableObject {
             .collection(FirebaseConstants.users)
             .document(uid)
             .getDocument { snapshot, error in
-                self.handleNetworkError(error: error, errorMessage: "ユーザー情報の取得に失敗しました。")
+                self.handleNetworkError(error: error, errorMessage: String.failureFetchUser)
                 
                 guard let data = snapshot?.data() else {
                     self.isQrCodeScanError = true
-                    self.handleError("ユーザー情報の取得に失敗しました。", error: nil)
+                    self.handleError(String.notFoundData, error: nil)
                     return
                 }
                 self.chatUser = .init(data: data)
@@ -257,7 +258,7 @@ final class ViewModel: ObservableObject {
     ///   - password: ユーザー名
     ///   - image: トップ画像
     /// - Returns: なし
-    func createNewAccount(email: String, password: String, username: String, image: UIImage?) {
+    func createNewAccount(email: String, password: String, username: String, age: String, address: String, image: UIImage?) {
         onIndicator = true
         // メールアドレス、パスワードどちらかが空白の場合、エラーを出す。
         if email.isEmpty || password.isEmpty {
@@ -293,9 +294,9 @@ final class ViewModel: ObservableObject {
             }
             
             if image == nil {
-                self.persistUsers(email: email, username: username, imageProfileUrl: nil)
+                self.persistUsers(email: email, username: username, age: age, address: address, imageProfileUrl: nil)
             } else {
-                self.persistImage(email: email, username: username, image: image)
+                self.persistImage(email: email, username: username, age: age, address: address, image: image)
             }
         }
     }
@@ -363,10 +364,10 @@ final class ViewModel: ObservableObject {
     /// サインアウト
     /// - Parameters: なし
     /// - Returns: なし
-    func handleSignOut() {
-        isUserCurrentryLoggedOut = true
-        try? FirebaseManager.shared.auth.signOut()
-    }
+//    func handleSignOut() {
+//        isUserCurrentryLoggedOut = true
+//        try? FirebaseManager.shared.auth.signOut()
+//    }
     
     /// ネットワークエラー処理
     /// - Parameters:
@@ -410,13 +411,16 @@ final class ViewModel: ObservableObject {
     ///   - password: パスワード
     ///   - imageProfileUrl: 画像URL
     /// - Returns: なし
-    func persistUsers(email: String, username: String, imageProfileUrl: URL?) {
+    func persistUsers(email: String, username: String, age: String, address: String, imageProfileUrl: URL?) {
         guard let uid = FirebaseManager.shared.auth.currentUser?.uid else { return }
         let userData = [FirebaseConstants.uid : uid,
                         FirebaseConstants.email: email,
                         FirebaseConstants.profileImageUrl: imageProfileUrl?.absoluteString ?? "",
                         FirebaseConstants.money: Setting.newRegistrationBenefits,
                         FirebaseConstants.username: username == "" ? email : username,
+                        FirebaseConstants.age: age,
+                        FirebaseConstants.address: address,
+                        FirebaseConstants.isStore: false,
         ] as [String : Any]
         
         FirebaseManager.shared.firestore
@@ -433,6 +437,12 @@ final class ViewModel: ObservableObject {
                     self.handleError("ユーザー情報の保存に失敗しました。", error: error)
                     return
                 }
+//                Analytics.logEvent("user_information", parameters: [
+//                  "age": age as NSObject,
+//                  "address": address as NSObject,
+//                ])
+                Analytics.setUserProperty(age, forName: "age")
+                Analytics.setUserProperty(address, forName: "address")
                 self.onIndicator = false
                 self.didCompleteLoginProcess()
             }
@@ -511,7 +521,7 @@ final class ViewModel: ObservableObject {
     ///   - password: パスワード
     ///   - image: トップ画像
     /// - Returns: なし
-    func persistImage(email: String, username: String, image: UIImage?) {
+    func persistImage(email: String, username: String, age: String, address: String, image: UIImage?) {
         guard let uid = FirebaseManager.shared.auth.currentUser?.uid else { return }
         
         let ref = FirebaseManager.shared.storage.reference(withPath: uid)
@@ -531,7 +541,7 @@ final class ViewModel: ObservableObject {
                     return
                 }
                 guard let url = url else { return }
-                self.persistUsers(email: email, username: username, imageProfileUrl: url)
+                self.persistUsers(email: email, username: username, age: age, address: address, imageProfileUrl: url)
             }
         }
     }

@@ -150,6 +150,7 @@ struct CreateNewMessageView: View {
             FirebaseConstants.username: chatUser.username,
             FirebaseConstants.isApproval: false,
             FirebaseConstants.approveUid: currentUser.uid,
+            FirebaseConstants.isStore: currentUser.isStore,
         ] as [String : Any]
         
         vm.persistFriends(document1: currentUser.uid, document2: chatUser.uid, data: myData)
@@ -163,6 +164,7 @@ struct CreateNewMessageView: View {
             FirebaseConstants.username: currentUser.username,
             FirebaseConstants.isApproval: false,
             FirebaseConstants.approveUid: currentUser.uid,
+            FirebaseConstants.isStore: currentUser.isStore,
         ] as [String : Any]
         
         vm.persistFriends(document1: chatUser.uid, document2: currentUser.uid, data: chatUserData)

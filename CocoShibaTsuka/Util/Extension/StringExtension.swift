@@ -8,8 +8,11 @@
 import Foundation
 
 extension String {
+    
     // Colors
     static let highlight = "Highlight"
+    static let caution = "Caution"
+    static let chatLogBackground = "ChatLogBackground"
     
     // Tutorial
     static func tutorialText(page: Int) -> String {
@@ -17,11 +20,11 @@ extension String {
         case 1:
             return "しば通貨アプリを\nダウンロードしていただき\nありがとうございます"
         case 2:
-            return "ボランティア活動を通して\nポイントを貯めることができます"
+            return "各店舗にあるQRコードを読み取って\nポイントを貯めることができます"
         case 3:
-            return "貯まったポイントは\n対象店舗で使うことができます"
+            return "貯まったポイントは\n豪華商品と交換することができます。"
         case 4:
-            return "QRコードをスキャンして\n友達に送ったり、お店に支払ったり\nすることができます"
+            return "QRコードをたくさんスキャンして\n欲しい商品をゲットしよう！"
         default :
             return ""
         }
@@ -33,8 +36,18 @@ extension String {
     static let weakPassword = "パスワードは6文字以上で設定してください。"
     static let emailAlreadyInUse = "このメールアドレスはすでに登録されています。"
     static let userNotFound = "メールアドレス、またはパスワードが間違っています。"
+    static let wrongEmail = "メールアドレスが間違っています。"
     static let userDisabled = "このユーザーアカウントは無効化されています。"
     static let networkError = "通信エラーが発生しました。"
     static let notFoundData = "データが見つかりませんでした。"
     static let failureDeleteData = "データ削除に失敗しました。"
+    static let failureFetchUID = "UIDの取得に失敗しました。"
+    static let failureFetchUser = "ユーザー情報の取得に失敗しました。"
+    
+    // preview
+    static let previewUsername = "test"
+    static let previewAge = ages.first ?? ""
+    static let previewAddress = addresses.first ?? ""
+    static let previewEmail = "test@gmail.com"
+    static let previewPassword = "12345678"
 }

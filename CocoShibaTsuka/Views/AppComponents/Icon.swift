@@ -73,6 +73,11 @@ struct Icon {
                 .stroke(.black , lineWidth: imageSize.lineWidth)
                 .frame(width: imageSize.frameSize, height: imageSize.frameSize)
                 .overlay {
+                    Circle()
+                        .frame(width: imageSize.frameSize - imageSize.lineWidth, height: imageSize.frameSize - imageSize.lineWidth)
+                        .foregroundStyle(Color(String.chatLogBackground))
+                }
+                .overlay {
                     Image(systemName: "person.fill")
                         .font(.system(size: imageSize.frameSize / 2))
                         .foregroundColor(.black)

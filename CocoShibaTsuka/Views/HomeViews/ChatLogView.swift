@@ -36,7 +36,7 @@ struct ChatLogView: View {
                 }
                 chatButtonBar
             }
-            .background(Color.chatLogBackground)
+            .background(.white)
             .fullScreenCover(isPresented: $isShowSendPayScreen) {
                 SendPayView(didCompleteSendPayProcess: { sendPayText in
                     isShowSendPayScreen.toggle()

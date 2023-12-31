@@ -12,7 +12,8 @@ struct QRCodeView: View {
     
     @Environment(\.dismiss) var dismiss
     private let brightness: CGFloat = UIScreen.main.brightness      // 画面遷移前の画面輝度を保持
-    @State private var isShowSendPayScreen = false      // SendPayViewの表示有無
+    @State private var isShowSendPayView = false                    // SendPayViewの表示有無
+    @State private var isShowGetPointView = false                   // GetPointViewの表示有無
 //    @State private var sendPayText = "0"                // 送金テキスト
 //    @State private var lastText = ""                    // 一時保存用最新メッセージ
 //    @State private var isSendPay = false                // 送金処理をしたか否か
@@ -38,6 +39,9 @@ struct QRCodeView: View {
                 buttons
             }
             .asCloseButton()
+            .navigationDestination(isPresented: $isShowGetPointView) {
+                GetPointView()
+            }
         }
         .onAppear {
             UIScreen.main.brightness = 1.0
@@ -168,9 +172,9 @@ struct QRCodeView: View {
                         .foregroundStyle(.white)
                 }
             }
-            .fullScreenCover(isPresented: $isShowSendPayScreen) {
+            .fullScreenCover(isPresented: $isShowSendPayView) {
                 SendPayView(didCompleteSendPayProcess: { sendPayText in
-                    isShowSendPayScreen.toggle()
+                    isShowSendPayView.toggle()
                     vm.handleSend(toId: chatUserUID, chatText: "", lastText: sendPayText, isSendPay: true)
                     dismiss()
                 }, chatUser: vm.chatUser)
@@ -262,9 +266,14 @@ struct QRCodeView: View {
             self.chatUserUID = fetchedUid
             
             guard let uid = FirebaseManager.shared.auth.currentUser?.uid else {
-                vm.handleError("UIDの取得に失敗しました。", error: nil)
+                vm.handleError(String.failureFetchUID, error: nil)
                 return
             }
+            guard let chatUser = vm.chatUser else {
+                vm.handleError(String.failureFetchUser, error: nil)
+                return
+            }
+            
             // 同アカウントのQRコードを読み取ってしまった場合、エラーを発動。
             if uid == self.chatUserUID {
                 vm.isQrCodeScanError = true
@@ -275,15 +284,39 @@ struct QRCodeView: View {
             
             // 遅らせてSendPayViewを表示する
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                if !vm.isQrCodeScanError {
-                    UIScreen.main.brightness = brightness
-                    self.isShowSendPayScreen = true
+                if chatUser.isStore {
+                    handleGetPointFromStore()
+                    self.isShowGetPointView = true
+                } else {
+                    if !vm.isQrCodeScanError {
+                        UIScreen.main.brightness = brightness
+                        self.isShowSendPayView = true
+                    }
                 }
             }
         case .failure(let error):
             vm.isQrCodeScanError = true
-            print("Scanning failed: \(error.localizedDescription)")
+            print("Error: \(error.localizedDescription)")
         }
+    }
+    
+    // MARK: - 店舗からポイント取得処理
+    /// - Parameters: なし
+    /// - Returns: なし
+    private func handleGetPointFromStore() {
+        guard let currentUser = vm.currentUser else { return }
+        
+        guard let currentUserMoney = Int(currentUser.money) else {
+            vm.handleError("送金エラーが発生しました。", error: nil)
+            return
+        }
+        
+        // 残高に取得ポイントを足す
+        let calculatedCurrentUserMoney = currentUserMoney + 1
+        
+        // 自身のデータを更新
+        let userData = [FirebaseConstants.money: String(calculatedCurrentUserMoney),]
+        vm.updateUsers(document: currentUser.uid, data: userData)
     }
 }
 

@@ -12,6 +12,7 @@
 		FD05E8752B25D3AD00AFC8CD /* CreateUsernameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD05E8742B25D3AD00AFC8CD /* CreateUsernameView.swift */; };
 		FD05E8772B26F52D00AFC8CD /* AlertBackButtonModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD05E8762B26F52D00AFC8CD /* AlertBackButtonModifier.swift */; };
 		FD05E87B2B2857C500AFC8CD /* UpdateUsernameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD05E87A2B2857C500AFC8CD /* UpdateUsernameView.swift */; };
+		FD0A280F2B400ABF006D85F0 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD0A280E2B400ABF006D85F0 /* AdSupport.framework */; };
 		FD10B42C2B34282200F7D791 /* SetUpEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD10B42B2B34282200F7D791 /* SetUpEmailView.swift */; };
 		FD10B42E2B34541400F7D791 /* SetUpPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD10B42D2B34541400F7D791 /* SetUpPasswordView.swift */; };
 		FD10B4332B3ABB6C00F7D791 /* SetUpAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD10B4322B3ABB6B00F7D791 /* SetUpAddressView.swift */; };
@@ -86,6 +87,7 @@
 		FDB83CAE2AF75A010087218D /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDB83CAD2AF75A010087218D /* SettingView.swift */; };
 		FDD703AF2B0B71E400F2CC56 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD703AE2B0B71E400F2CC56 /* ContentViewModel.swift */; };
 		FDD9F4692B0CA42200F6D6E0 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD9F4682B0CA42200F6D6E0 /* LoginViewModel.swift */; };
+		FDE949E92B41264D006D757D /* GetPointView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE949E82B41264D006D757D /* GetPointView.swift */; };
 		FDE9B1382B15DEAD00C22B63 /* SetUpUsernameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE9B1372B15DEAD00C22B63 /* SetUpUsernameView.swift */; };
 		FDE9B13A2B15F5B500C22B63 /* CustomCapsule.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE9B1392B15F5B500C22B63 /* CustomCapsule.swift */; };
 		FDE9B13C2B15FEEE00C22B63 /* InputText.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE9B13B2B15FEEE00C22B63 /* InputText.swift */; };
@@ -98,6 +100,7 @@
 		FD05E8762B26F52D00AFC8CD /* AlertBackButtonModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertBackButtonModifier.swift; sourceTree = "<group>"; };
 		FD05E8782B2850D200AFC8CD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		FD05E87A2B2857C500AFC8CD /* UpdateUsernameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateUsernameView.swift; sourceTree = "<group>"; };
+		FD0A280E2B400ABF006D85F0 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		FD10B42B2B34282200F7D791 /* SetUpEmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetUpEmailView.swift; sourceTree = "<group>"; };
 		FD10B42D2B34541400F7D791 /* SetUpPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetUpPasswordView.swift; sourceTree = "<group>"; };
 		FD10B42F2B35A0C600F7D791 /* CocoShibaTsuka.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CocoShibaTsuka.entitlements; sourceTree = "<group>"; };
@@ -145,6 +148,7 @@
 		FDB83CAD2AF75A010087218D /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		FDD703AE2B0B71E400F2CC56 /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
 		FDD9F4682B0CA42200F6D6E0 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		FDE949E82B41264D006D757D /* GetPointView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetPointView.swift; sourceTree = "<group>"; };
 		FDE9B1372B15DEAD00C22B63 /* SetUpUsernameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetUpUsernameView.swift; sourceTree = "<group>"; };
 		FDE9B1392B15F5B500C22B63 /* CustomCapsule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCapsule.swift; sourceTree = "<group>"; };
 		FDE9B13B2B15FEEE00C22B63 /* InputText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputText.swift; sourceTree = "<group>"; };
@@ -166,6 +170,7 @@
 				FDB03AE22ADA73560018E732 /* FirebaseFirestoreSwift in Frameworks */,
 				FDB03ACE2ADA73560018E732 /* FirebaseAppCheck in Frameworks */,
 				FDB03ACC2ADA73560018E732 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
+				FD0A280F2B400ABF006D85F0 /* AdSupport.framework in Frameworks */,
 				FDB03AD22ADA73560018E732 /* FirebaseAuth in Frameworks */,
 				FDB03AD62ADA73560018E732 /* FirebaseCrashlytics in Frameworks */,
 				FDB03AF62ADA73560018E732 /* FirebaseRemoteConfigSwift in Frameworks */,
@@ -196,7 +201,6 @@
 				FDE9B1372B15DEAD00C22B63 /* SetUpUsernameView.swift */,
 				FD10B42B2B34282200F7D791 /* SetUpEmailView.swift */,
 				FD10B42D2B34541400F7D791 /* SetUpPasswordView.swift */,
-				FD05E8742B25D3AD00AFC8CD /* CreateUsernameView.swift */,
 			);
 			path = SignUpViews;
 			sourceTree = "<group>";
@@ -208,6 +212,14 @@
 				FD05E86F2B25A83300AFC8CD /* Indicator.swift */,
 			);
 			path = UIKit;
+			sourceTree = "<group>";
+		};
+		FD0A280D2B400ABF006D85F0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FD0A280E2B400ABF006D85F0 /* AdSupport.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		FD1CA2FD2ADFF29C00899428 /* AppComponents */ = {
@@ -233,6 +245,7 @@
 		FD524BE42B2446E800010BEA /* Trash */ = {
 			isa = PBXGroup;
 			children = (
+				FD05E8742B25D3AD00AFC8CD /* CreateUsernameView.swift */,
 				FD10B4322B3ABB6B00F7D791 /* SetUpAddressView.swift */,
 				FDB83CAD2AF75A010087218D /* SettingView.swift */,
 				FDD703AE2B0B71E400F2CC56 /* ContentViewModel.swift */,
@@ -258,6 +271,7 @@
 			children = (
 				FDB03A9E2ADA6B340018E732 /* CocoShibaTsuka */,
 				FDB03A9D2ADA6B340018E732 /* Products */,
+				FD0A280D2B400ABF006D85F0 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -332,6 +346,7 @@
 				FD1CA2F12ADD5A1E00899428 /* ChatLogView.swift */,
 				FD78B9222AEE6FCB008986E3 /* SendPayView.swift */,
 				FD4BD2512B11D5540059ADE9 /* QRCodeView.swift */,
+				FDE949E82B41264D006D757D /* GetPointView.swift */,
 			);
 			path = HomeViews;
 			sourceTree = "<group>";
@@ -546,6 +561,7 @@
 				FD413EBE2B30647000964C98 /* TutorialView.swift in Sources */,
 				FD10B42C2B34282200F7D791 /* SetUpEmailView.swift in Sources */,
 				FDE9B1382B15DEAD00C22B63 /* SetUpUsernameView.swift in Sources */,
+				FDE949E92B41264D006D757D /* GetPointView.swift in Sources */,
 				FD1CA2FF2ADFF2C800899428 /* Icon.swift in Sources */,
 				FDB03B042ADB9F0E0018E732 /* ViewExtension.swift in Sources */,
 				FD524BE62B244AF800010BEA /* LoginView.swift in Sources */,

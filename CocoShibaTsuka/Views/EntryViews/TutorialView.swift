@@ -57,10 +57,10 @@ struct Tutorial: View {
         VStack {
             Spacer()
             
-            Image(systemName: "iphone")
-                .resizable()
-                .scaledToFill()
-                .frame(width: 180, height: 180)
+//            Image(systemName: "iphone")
+//                .resizable()
+//                .scaledToFill()
+//                .frame(width: 180, height: 180)
             
             Spacer()
             

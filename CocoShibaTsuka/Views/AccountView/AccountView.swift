@@ -18,14 +18,15 @@ struct AccountView: View {
     @State private var isShowSuccessWithdrawalAlert = false             // 退会成功アラート
     @State private var isShowSignOutAlert = false                       // 強制サインアウトアラート
     
-    init() {
-        vm.isUserCurrentryLoggedOut = FirebaseManager.shared.auth.currentUser?.uid == nil
+    @Binding var isUserCurrentryLoggedOut: Bool
+//    init() {
+//        vm.isUserCurrentryLoggedOut = FirebaseManager.shared.auth.currentUser?.uid == nil
 //        if FirebaseManager.shared.auth.currentUser?.uid != nil {
 //            vm.fetchCurrentUser()
 //            vm.fetchRecentMessages()
 //            vm.fetchFriends()
 //        }
-    }
+//    }
     
     var body: some View {
         NavigationStack {
@@ -63,7 +64,6 @@ struct AccountView: View {
             List {
                 // ユーザー名を変更
                 NavigationLink {
-//                    UpdateUserInfo(category: .username, text: vm.currentUser?.username ?? "")
                     UpdateUsernameView(username: vm.currentUser?.username ?? "")
                 } label: {
                     HStack {
@@ -106,8 +106,14 @@ struct AccountView: View {
                 vm.fetchCurrentUser()
                 vm.fetchRecentMessages()
                 vm.fetchFriends()
+            } else {
+//                vm.isUserCurrentryLoggedOut = true
+                isUserCurrentryLoggedOut = true
             }
         }
+//        .onChange(of: FirebaseManager.shared.auth.currentUser?.uid) { uid in
+//            vm.isUserCurrentryLoggedOut = uid == nil
+//        }
         .asDestructiveAlert(title: "",
                             isShowAlert: $isShowConfirmationSignOutAlert,
                             message: "ログアウトしますか？",
@@ -116,7 +122,7 @@ struct AccountView: View {
             DispatchQueue.main.async {
                 isShowConfirmationSignOutAlert = false
             }
-            vm.handleSignOut()
+            handleSignOut()
         })
         .asDestructiveAlert(title: "",
                             isShowAlert: $isShowConfirmationWithdrawalAlert,
@@ -136,7 +142,7 @@ struct AccountView: View {
             DispatchQueue.main.async {
                 isShowSuccessWithdrawalAlert = false
             }
-            vm.handleSignOut()
+            handleSignOut()
         })
         .asSingleAlert(title: "",
                        isShowAlert: $vm.isShowError,
@@ -154,19 +160,11 @@ struct AccountView: View {
              DispatchQueue.main.async {
                  isShowSignOutAlert = false
              }
-             vm.handleSignOut()
+             handleSignOut()
          })
-        .onAppear {
-            if FirebaseManager.shared.auth.currentUser?.uid != nil {
-                vm.fetchCurrentUser()
-                vm.fetchRecentMessages()
-                vm.fetchFriends()
-            }
-        }
-        // TODO: - AccountViewにもフルスクリーンカバーをしないと、ログインした時にLoginViewが表示されない。そのままで良いのか？
-        .fullScreenCover(isPresented: $vm.isUserCurrentryLoggedOut) {
+        .fullScreenCover(isPresented: $isUserCurrentryLoggedOut) {
             EntryView {
-                vm.isUserCurrentryLoggedOut = false
+                isUserCurrentryLoggedOut = false
                 vm.fetchCurrentUser()
                 vm.fetchRecentMessages()
                 vm.fetchFriends()
@@ -204,8 +202,16 @@ struct AccountView: View {
         // Auth削除
         vm.deleteAuth()
     }
+    
+    // MARK: - サインアウト
+    /// - Parameters: なし
+    /// - Returns: なし
+    private func handleSignOut() {
+        isUserCurrentryLoggedOut = true
+        try? FirebaseManager.shared.auth.signOut()
+    }
 }
 
 #Preview {
-    AccountView()
+    AccountView(isUserCurrentryLoggedOut: .constant(false))
 }

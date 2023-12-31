@@ -19,10 +19,12 @@ struct SetUpUsernameView: View {
     
     // DB
     @State private var username: String = ""            // ユーザー名
+    @State private var age: String = ""                 // 年齢
+    @State private var address: String = ""             // 住所
     @State private var image: UIImage?                  // トップ画像
     
     var disabled: Bool {
-        self.username.isEmpty
+        self.username.isEmpty || self.age.isEmpty || self.address.isEmpty
     }                                                   // ボタンの有効性
     
     init(didCompleteLoginProcess: @escaping () -> ()) {
@@ -53,13 +55,16 @@ struct SetUpUsernameView: View {
                 
                 Spacer()
                 
-                InputText.InputTextField(focus: $focus, editText: $username, titleText: "ユーザー名", isEmail: false)
-                    .padding(.bottom)
+                InputText.InputTextField(focus: $focus, editText: $username, titleText: "ユーザー名 (他のユーザーに公開されます)", isEmail: false)
+                
+                InputText.InputPicker(editText: $age, titleText: "年代", explanationText: "年代を選択してください", pickers: ages)
+                
+                InputText.InputPicker(editText: $address, titleText: "住所", explanationText: "住所を選択してください", pickers: addresses)
                 
                 Spacer()
                 
                 NavigationLink {
-                    SetUpEmailView(username: $username, image: $image, didCompleteLoginProcess: didCompleteLoginProcess)
+                    SetUpEmailView(username: $username, age: $age, address: $address, image: $image, didCompleteLoginProcess: didCompleteLoginProcess)
                 } label: {
                     CustomCapsule(text: "次へ", imageSystemName: nil, foregroundColor: disabled ? .gray : .black, textColor: .white, isStroke: false)
                 }

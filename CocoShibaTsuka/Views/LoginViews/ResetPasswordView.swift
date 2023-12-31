@@ -44,10 +44,8 @@ struct ResetPasswordView: View {
                 Spacer()
                 
                 InputText.InputPasswordTextField(focus: $focus, editText: $password, titleText: "パスワード", isShowPassword: $isShowPassword)
-                    .padding(.bottom)
                 
                 InputText.InputPasswordTextField(focus: $focus, editText: $password2, titleText: "パスワード（確認用）", isShowPassword: $isShowPassword2)
-                    .padding(.bottom)
                 
                 Spacer()
                 
@@ -82,5 +80,6 @@ struct ResetPasswordView: View {
 }
 
 #Preview {
-    ResetPasswordView(email: .constant("test@gmail.com"), didCompleteLoginProcess: {})
+    ResetPasswordView(email: .constant(String.previewEmail),
+                      didCompleteLoginProcess: {})
 }

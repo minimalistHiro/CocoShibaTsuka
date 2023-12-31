@@ -15,6 +15,12 @@ struct HomeView: View {
     @State private var isShowQRCodeView = false             // QRCodeView表示有無
     @State private var isShowSignOutAlert = false           // 強制サインアウトアラート
     
+    @Binding var isUserCurrentryLoggedOut: Bool
+    
+//    init() {
+//        vm.isUserCurrentryLoggedOut = FirebaseManager.shared.auth.currentUser?.uid == nil
+//    }
+    
     var body: some View {
         NavigationStack {
             ScrollView {
@@ -30,6 +36,10 @@ struct HomeView: View {
         .onAppear {
             if FirebaseManager.shared.auth.currentUser?.uid != nil {
                 vm.fetchCurrentUser()
+                vm.fetchRecentMessages()
+                vm.fetchFriends()
+            } else {
+                isUserCurrentryLoggedOut = true
             }
         }
         .asSingleAlert(title: "",
@@ -46,14 +56,11 @@ struct HomeView: View {
                        message: "エラーが発生したためログアウトします。",
                        didAction: {
             isShowSignOutAlert = false
-            vm.handleSignOut()
+            handleSignOut()
         })
-        .fullScreenCover(isPresented: $isShowQRCodeView) {
-            QRCodeView()
-        }
-        .fullScreenCover(isPresented: $vm.isUserCurrentryLoggedOut) {
+        .fullScreenCover(isPresented: $isUserCurrentryLoggedOut) {
             EntryView {
-                vm.isUserCurrentryLoggedOut = false
+                isUserCurrentryLoggedOut = false
                 vm.fetchCurrentUser()
                 vm.fetchRecentMessages()
                 vm.fetchFriends()
@@ -154,9 +161,20 @@ struct HomeView: View {
             }
         }
         .padding(.bottom)
+        .fullScreenCover(isPresented: $isShowQRCodeView) {
+            QRCodeView()
+        }
+    }
+    
+    // MARK: - サインアウト
+    /// - Parameters: なし
+    /// - Returns: なし
+    private func handleSignOut() {
+        isUserCurrentryLoggedOut = true
+        try? FirebaseManager.shared.auth.signOut()
     }
 }
 
 #Preview {
-    HomeView()
+    HomeView(isUserCurrentryLoggedOut: .constant(false))
 }

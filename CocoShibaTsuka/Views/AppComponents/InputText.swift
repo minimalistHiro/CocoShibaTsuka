@@ -13,7 +13,7 @@ struct InputText {
     // 各種サイズ
     class Size {
         static let textPaddingLeading: CGFloat = 50
-        static let textFieldPaddingTop: CGFloat = 16
+        static let textFieldPaddingTop: CGFloat = 12
         static let textFieldPaddingHeight: CGFloat = 25
         static let imagePaddingTrailing: CGFloat = 30
         static let rectangleFrameHeight: CGFloat = 2
@@ -47,7 +47,7 @@ struct InputText {
                     .padding(.leading, Size.textPaddingLeading)
                 TextField("", text: $editText)
                     .focused(focus.projectedValue)
-                    .keyboardType(isEmail ? .emailAddress : .default)
+                    .keyboardType(isEmail ? .default : .default)
                     .padding(.top, Size.textFieldPaddingTop)
                     .padding(.horizontal, Size.textFieldPaddingHeight)
                     .onChange(of: editText, perform: { value in
@@ -61,6 +61,7 @@ struct InputText {
                     .frame(height: Size.rectangleFrameHeight)
                     .padding(.vertical, Size.rectanglePaddingVertical)
                     .padding(.horizontal, Size.rectanglePaddingHorizontal)
+                    .padding(.bottom)
             }
         }
     }
@@ -117,6 +118,43 @@ struct InputText {
                     .frame(height: Size.rectangleFrameHeight)
                     .padding(.vertical, Size.rectanglePaddingVertical)
                     .padding(.horizontal, Size.rectanglePaddingHorizontal)
+                    .padding(.bottom)
+            }
+        }
+    }
+    
+    struct InputPicker: View {
+        
+        @Binding var editText: String
+        let titleText: String
+        let explanationText: String
+        let pickers: [String]
+        
+        var body: some View {
+            VStack {
+                Text(titleText)
+                    .font(.caption)
+                    .frame(width: UIScreen.main.bounds.width, alignment: .leading)
+                    .padding(.leading, Size.textPaddingLeading)
+                HStack {
+                    Text(editText.isEmpty ? explanationText : editText)
+                        .foregroundStyle(editText.isEmpty ? .gray : .black)
+                    Spacer()
+                    Picker("", selection: $editText) {
+                        ForEach(pickers, id: \.self) { picker in
+                            Text(picker).tag(picker)
+                        }
+                    }
+                    .pickerStyle(.menu)
+                    .tint(.gray)
+                }
+                .padding(.horizontal, Size.textFieldPaddingHeight)
+                Rectangle()
+                    .foregroundColor(.black)
+                    .frame(height: Size.rectangleFrameHeight)
+                    .padding(.vertical, Size.rectanglePaddingVertical)
+                    .padding(.horizontal, Size.rectanglePaddingHorizontal)
+                    .padding(.bottom)
             }
         }
     }

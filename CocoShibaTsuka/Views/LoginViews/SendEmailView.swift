@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 struct SendEmailView: View {
     
@@ -13,7 +14,6 @@ struct SendEmailView: View {
     @ObservedObject var vm: ViewModel
     let didCompleteLoginProcess: () -> ()
     @State private var isShowSendEmailAlert = false     // メール送信確認アラート
-    @State private var isNavigateSetUpPasswordView = false  // パスワード設定画面の表示有無
     
     // DB
     @State private var email: String = ""               // メールアドレス
@@ -33,13 +33,11 @@ struct SendEmailView: View {
                 Spacer()
                 
                 InputText.InputTextField(focus: $focus, editText: $email, titleText: "メールアドレス", isEmail: true)
-                    .padding(.bottom)
                 
                 Spacer()
                 
                 Button {
                     sendResetPasswordLink(email: email)
-                    isShowSendEmailAlert = true
                 } label: {
                     CustomCapsule(text: "メール送信", imageSystemName: nil, foregroundColor: disabled ? .gray : .black, textColor: .white, isStroke: false)
                 }
@@ -58,14 +56,11 @@ struct SendEmailView: View {
             .overlay {
                 ScaleEffectIndicator(onIndicator: $vm.onIndicator)
             }
-            .navigationDestination(isPresented: $isNavigateSetUpPasswordView) {
-                ResetPasswordView(email: $email, didCompleteLoginProcess: didCompleteLoginProcess)
-            }
         }
         .asBackButton()
-        .onOpenURL { url in
-            isNavigateSetUpPasswordView = true
-        }
+//        .onOpenURL { url in
+//            isNavigateSetUpPasswordView = true
+//        }
         .asSingleAlert(title: "",
                        isShowAlert: $vm.isShowError,
                        message: vm.errorMessage,
@@ -84,7 +79,23 @@ struct SendEmailView: View {
     /// - Returns: なし
     private func sendResetPasswordLink(email: String) {
         FirebaseManager.shared.auth.sendPasswordReset(withEmail: email) { error in
-            vm.handleNetworkError(error: error, errorMessage: "リンクの送信に失敗しました。")
+            if let error = error as NSError?, let errorCode = AuthErrorCode.Code(rawValue: error.code) {
+                switch errorCode {
+                case .invalidEmail:
+                    vm.handleError(String.invalidEmail, error: error)
+                    return
+                case .userNotFound:
+                    vm.handleError(String.wrongEmail, error: error)
+                    return
+                case .networkError:
+                    vm.handleError(String.networkError, error: error)
+                    return
+                default:
+                    vm.handleError(error.domain, error: error)
+                    return
+                }
+            }
+            isShowSendEmailAlert = true
         }
     }
 }

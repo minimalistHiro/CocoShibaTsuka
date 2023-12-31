@@ -23,6 +23,8 @@ struct SetUpEmailView: View {
     // DB
     @State private var email: String = ""               // メールアドレス
     @Binding var username: String
+    @Binding var age: String
+    @Binding var address: String
     @Binding var image: UIImage?
     
     var disabled: Bool {
@@ -30,10 +32,14 @@ struct SetUpEmailView: View {
     }                                                   // ボタンの有効性
     
     init(username: Binding<String>,
+         age: Binding<String>,
+         address: Binding<String>,
          image: Binding<UIImage?>,
          didCompleteLoginProcess: @escaping () -> ())
     {
         self._username = username
+        self._age = age
+        self._address = address
         self._image = image
         self.didCompleteLoginProcess = didCompleteLoginProcess
         self.vm = .init(didCompleteLoginProcess: didCompleteLoginProcess)
@@ -45,13 +51,11 @@ struct SetUpEmailView: View {
                 Spacer()
                 
                 InputText.InputTextField(focus: $focus, editText: $email, titleText: "メールアドレス", isEmail: true)
-                    .padding(.bottom)
                 
                 Spacer()
                 
                 Button {
                     sendSignUpLink(email: email)
-                    isShowSendEmailAlert = true
                 } label: {
                     CustomCapsule(text: "メール送信", imageSystemName: nil, foregroundColor: disabled ? .gray : .black, textColor: .white, isStroke: false)
                 }
@@ -71,7 +75,7 @@ struct SetUpEmailView: View {
                 ScaleEffectIndicator(onIndicator: $vm.onIndicator)
             }
             .navigationDestination(isPresented: $isNavigateSetUpPasswordView) {
-                SetUpPasswordView(email: $email, username: $username, image: $image, didCompleteLoginProcess: didCompleteLoginProcess)
+                SetUpPasswordView(email: $email, username: $username, age: $age, address: $address, image: $image, didCompleteLoginProcess: didCompleteLoginProcess)
             }
         }
 //        .onAppear {
@@ -137,7 +141,23 @@ struct SetUpEmailView: View {
         actionCodeSettings.setIOSBundleID(Bundle.main.bundleIdentifier!)
         
         FirebaseManager.shared.auth.sendSignInLink(toEmail: email, actionCodeSettings: actionCodeSettings) { error in
-            vm.handleNetworkError(error: error, errorMessage: "リンクの送信に失敗しました。")
+            if let error = error as NSError?, let errorCode = AuthErrorCode.Code(rawValue: error.code) {
+                switch errorCode {
+                case .invalidEmail:
+                    vm.handleError(String.invalidEmail, error: error)
+                    return
+                case .emailAlreadyInUse:
+                    vm.handleError(String.emailAlreadyInUse, error: error)
+                    return
+                case .networkError:
+                    vm.handleError(String.networkError, error: error)
+                    return
+                default:
+                    vm.handleError(error.domain, error: error)
+                    return
+                }
+            }
+            isShowSendEmailAlert = true
 //            UserDefaults.standard.setValue(email, forKey: "Email")
 //            isSendEmail = true
         }
@@ -156,5 +176,9 @@ struct SetUpEmailView: View {
 }
 
 #Preview {
-    SetUpEmailView(username: .constant("test"), image: .constant(nil), didCompleteLoginProcess: {})
+    SetUpEmailView(username: .constant(String.previewUsername),
+                   age: .constant(String.previewAge), 
+                   address: .constant(String.previewAddress),
+                   image: .constant(nil),
+                   didCompleteLoginProcess: {})
 }
